@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para a minha Bonitinha</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #ffe6e6;
+            color: #5a3a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #ff3355;
+        }
+
+        .btn-nao {
+            background-color: #4CAF50;
+        }
+
+        .btn-nao:hover {
+            background-color: #45a049;
+        }
+
+        #btn-sim {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .msg-erro {
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 24px;
+        }
+
+        .lista-frases {
+            text-align: left;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #ff4d6d;
+            border-radius: 10px;
+            text-align: center;
+            width: 150px;
+            margin-bottom: 15px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .tela {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tela.ativa {
+            display: flex;
+        }
+
+        .coracoes {
+            font-size: 2rem;
+            margin-top: 20px;
+            animation: palpitar 1s infinite alternate;
+        }
+
+        @keyframes palpitar {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        #mensagem-sim {
+            font-size: 1.2rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="tela1" class="container tela ativa">
+        <h1>Hoje estou um pouco triste porque a minha bonitinha disse que é uma pessoa terrível.</h1>
+        <h2>Você é mesmo uma pessoa terrível?</h2>
+        
+        <div style="margin-top: 30px; position: relative; height: 100px; width: 100%;">
+            <button id="btn-sim" class="btn">SIM</button>
+            <button class="btn btn-nao" onclick="irParaTela2()">NÃO</button>
+        </div>
+        <div id="mensagem-sim"></div>
+    </div>
+
+    <div id="tela2" class="container tela">
+        <h2>Complete com a palavra correta:</h2>
+        
+        <div class="lista-frases">
+            <p>Eu _ _ _ você quando você é um pouquinho atrasadinha</p>
+            <p>Eu _ _ _ você quando você diz: "vou dormir 20 minutos", e viram 10 horas</p>
+            <p>Eu _ _ _ você quando fica o dia todo enrolando sobre o que fazer</p>
+            <p>Eu _ _ _ quando você está cansada</p>
+            <p>Eu _ _ _ quando você está cheia de energia</p>
+        </div>
+
+        <input type="text" id="input-palavra" placeholder="A palavra é..." onkeypress="verificarEnter(event)">
+        <button class="btn" onclick="verificarPalavra()">Verificar</button>
+        <div id="erro-msg" class="msg-erro"></div>
+    </div>
+
+    <div id="tela3" class="container tela">
+        <h1 style="color: #ff4d6d;">Eu te amo quando você é confiante e feliz de cabeça erguida!</h1>
+        <p style="font-size: 1.2rem; line-height: 1.6;">
+            Minha chocolatona fofona marrom bombom, a mulher mais incrível e bonita que eu conheço.
+        </p>
+        <p style="font-size: 1.2rem; line-height: 1.6;">
+            Se você quiser mudar e tentar ser mais produtiva, farei o meu melhor para te apoiar, para que a minha <strong>CHOCOLATONA</strong> nunca mais diga palavras feias para si mesma.
+        </p>
+        <h2 style="color: #ff4d6d; font-size: 1.8rem; margin: 20px 0 5px 0;">Te amo!</h2>
+        <h3 style="margin: 0;">Você é a minha vida.</h3>
+        
+        <div class="coracoes">❤️❤️❤️❤️❤️❤️❤️❤️</div>
+    </div>
+
+    <script>
+        // Logica para a Tela 1 (Botão SIM fujão)
+        const btnSim = document.getElementById('btn-sim');
+        const msgSim = document.getElementById('mensagem-sim');
+        let scale = 1;
+        const frasesSim = [
+            "Pense bem...", 
+            "Não concordo!", 
+            "Pare de falar besteira!", 
+            "Tá doida?!", 
+            "Nem vem!"
+        ];
+
+        btnSim.addEventListener('click', function(e) {
+            // Fica menor
+            scale -= 0.15;
+            if(scale < 0.2) scale = 0.2;
+            btnSim.style.transform = `scale(${scale})`;
+
+            // Muda a posição aleatoriamente
+            const maxX = window.innerWidth - btnSim.clientWidth - 50;
+            const maxY = window.innerHeight - btnSim.clientHeight - 50;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            btnSim.style.position = 'fixed';
+            btnSim.style.left = randomX + 'px';
+            btnSim.style.top = randomY + 'px';
+
+            // Mostra frase aleatória
+            const fraseAleatoria = frasesSim[Math.floor(Math.random() * frasesSim.length)];
+            msgSim.innerText = fraseAleatoria;
+        });
+
+        // Transição Tela 1 -> Tela 2
+        function irParaTela2() {
+            document.getElementById('tela1').classList.remove('ativa');
+            document.getElementById('tela2').classList.add('ativa');
+        }
+
+        // Lógica para a Tela 2 (Verificar palavra "amo")
+        function verificarPalavra() {
+            const input = document.getElementById('input-palavra').value.trim().toLowerCase();
+            const msgErro = document.getElementById('erro-msg');
+
+            if (input === 'amo') {
+                document.getElementById('tela2').classList.remove('ativa');
+                document.getElementById('tela3').classList.add('ativa');
+            } else {
+                msgErro.innerText = "Palavra errada! Tente de novo, bonitinha.";
+            }
+        }
+
+        // Permitir que o 'Enter' funcione no campo de texto
+        function verificarEnter(event) {
+            if (event.key === "Enter") {
+                verificarPalavra();
+            }
+        }
+    </script>
+</body>
+</html>
